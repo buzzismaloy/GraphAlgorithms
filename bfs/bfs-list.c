@@ -45,16 +45,32 @@ void freeGraph(Graph* graph) {
 
 void addEdge(Graph* graph, int src, int dest) {
 	//forward edge for undirected graph
-	Node* newNode = (Node*)malloc(sizeof(Node));
-	newNode->vertex = dest;
-	newNode->next = graph->adjLists[src];
-	graph->adjLists[src] = newNode;
+	//node src -> dest
+	Node* newNode1 = (Node*)malloc(sizeof(Node));
+    newNode1->vertex = dest;
+    newNode1->next = NULL;
+
+    if (!graph->adjLists[src]) {
+        graph->adjLists[src] = newNode1;
+    } else {
+        Node* temp = graph->adjLists[src];
+        while (temp->next) temp = temp->next;
+        temp->next = newNode1;
+    }
 
 	//reverse edge for undirected graph
-	Node* newNode1 = (Node*)malloc(sizeof(Node));
-	newNode1->vertex = src;
-	newNode1->next = graph->adjLists[dest];
-	graph->adjLists[dest] = newNode1;
+	//node dest -> src
+    Node* newNode2 = (Node*)malloc(sizeof(Node));
+    newNode2->vertex = src;
+    newNode2->next = NULL;
+
+    if (!graph->adjLists[dest]) {
+        graph->adjLists[dest] = newNode2;
+    } else {
+        Node* temp = graph->adjLists[dest];
+        while (temp->next) temp = temp->next;
+        temp->next = newNode2;
+    }
 }
 
 Queue* createQueue() {
