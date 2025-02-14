@@ -22,8 +22,8 @@ class BFS {
 				std::cout << u << ' ';
 
 				for (const int& v : adjList[u]) {
-					if (visited[v]) {
-						visisted[v] = true;
+					if (!visited[v]) {
+						visited[v] = true;
 						q.push(v);
 					}
 				}
@@ -31,13 +31,31 @@ class BFS {
 			std::cout << "\n\n";
 		}
 
-		void bfsAdjMatrix() {
+		void bfsAdjMatrix(int start) {
+			std::vector<bool> visited(numVertexes, false);
+			std::queue<int> q;
+			visited[start] = true;
+			q.push(start);
 
+			std::cout << "BFS(adjMatrix): ";
+			while (!q.empty()) {
+				int u = q.front();
+				q.pop();
+				std::cout << u << ' ';
+
+				for (int v = 0; v < numVertexes; ++v) {
+					if (adjMatrix[u][v] && !visited[v]) {
+						visited[v] = true;
+						q.push(v);
+					}
+				}
+			}
+			std::cout << "\n\n";
 		}
 	public:
 
 		BFS(int num, bool typeList) : numVertexes(num), useAdjList(typeList) {
-			if (usedAdjList) {
+			if (useAdjList) {
 				adjList.resize(numVertexes);
 			}
 			else {
@@ -68,6 +86,26 @@ class BFS {
 
 
 int main() {
+	BFS list(6, true), matrix(6, false);
+
+    list.addEdge(0, 1);
+    list.addEdge(0, 2);
+    list.addEdge(1, 3);
+    list.addEdge(1, 4);
+    list.addEdge(2, 4);
+    list.addEdge(3, 5);
+    list.addEdge(4, 5);
+
+    matrix.addEdge(0, 1);
+    matrix.addEdge(0, 2);
+    matrix.addEdge(1, 3);
+    matrix.addEdge(1, 4);
+    matrix.addEdge(2, 4);
+    matrix.addEdge(3, 5);
+    matrix.addEdge(4, 5);
+
+	list.bfs(0);
+	matrix.bfs(0);
 
 	return 0;
 }
