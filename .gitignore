@@ -1,4 +1,5 @@
 src/bfs/c/bfs-list
 src/bfs/c/bfs-matrix
 src/bfs/cpp/bfs
+src/dfs/c/recursive/dfs-list
 
